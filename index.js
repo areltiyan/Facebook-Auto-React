@@ -87,7 +87,7 @@ const getBeranda = () => new Promise(async (resolve, reject) => {
             }) : resolve(JSON)
         } else red('[!] Error, check your cookies [maybe Expired]!');
     } catch (error) {
-        red(error);
+        reject(error);
     }
 });
 
@@ -111,7 +111,7 @@ const getLinkReact = (link) => new Promise(async (resolve, reject) => {
             }) : resolve(JSON)
         }
     } catch (error) {
-        red(error);
+        reject(error);
     }
 });
 
