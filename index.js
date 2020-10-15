@@ -142,29 +142,33 @@ const startReact = (link) => new Promise(async (resolve, reject) => {
     if (isNaN(second2)) return red('[!] Check your delay react !')
 
     while (1) {
-        const getPost = await getBeranda();
-        if (getPost.status) {
-            yellow('[!] Detected Post!');
-            yegreen('   - From Friends', `[${getPost.idPostFriend}]`);
-            yegreen('   - From Groups', `[${getPost.idPostGroup}]`);
-            yellow('[!] Trying Get React')
-            for (let i = 0; i < getPost.ids.length; i++) {
-                const getReact = await getLinkReact(getPost.ids[i].link)
-                const type = react_type == 7 ? Math.floor(Math.random() * getReact.link.length) : react_type
-                const type_text = type == 0 ? 'Like' : type == 1 ? 'Super' : type == 2 ? 'Care' : type == 3 ? 'Haha' : type == 4 ? 'Wow' : type == 5 ? 'Sad' : 'Angry';
-                if (getReact.status) {
-                    const go = await startReact(getReact.link[type])
-                    go.status == true ? green(`[+] Success react id -> ${getPost.ids[i].id} [${type_text}]`) : red(`[+] Error react id -> ${getPost.ids[i].id} [${type_text}]`) 
-                } else {
-                    red('[!] Error get react link!');
+        try {
+            const getPost = await getBeranda();
+            if (getPost.status) {
+                yellow('[!] Detected Post!');
+                yegreen('   - From Friends', `[${getPost.idPostFriend}]`);
+                yegreen('   - From Groups', `[${getPost.idPostGroup}]`);
+                yellow('[!] Trying Get React')
+                for (let i = 0; i < getPost.ids.length; i++) {
+                    const getReact = await getLinkReact(getPost.ids[i].link)
+                    const type = react_type == 7 ? Math.floor(Math.random() * getReact.link.length) : react_type
+                    const type_text = type == 0 ? 'Like' : type == 1 ? 'Super' : type == 2 ? 'Care' : type == 3 ? 'Haha' : type == 4 ? 'Wow' : type == 5 ? 'Sad' : 'Angry';
+                    if (getReact.status) {
+                        const go = await startReact(getReact.link[type])
+                        go.status == true ? green(`[+] Success react id -> ${getPost.ids[i].id} [${type_text}]`) : red(`[+] Error react id -> ${getPost.ids[i].id} [${type_text}]`) 
+                    } else {
+                        red('[!] Error get react link!');
+                    }
+                    green(`[!] Delay react ! ${second2}s`)
+                    await delay(parseInt(second2, 10) * 1000); 
                 }
-                green(`[!] Delay react ! ${second2}s`)
-                await delay(parseInt(second2, 10) * 1000); 
+            } else {
+                red('[!] Error, post not found!');
             }
-        } else {
-            red('[!] Error, post not found!');
+            green(`[!] Delay Get Post ! ${second}s`)
+            await delay(parseInt(second, 10) * 1000);   
+        } catch (error) {
+            red(error)
         }
-        green(`[!] Delay Get Post ! ${second}s`)
-        await delay(parseInt(second, 10) * 1000);
     }
 })();
