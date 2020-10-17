@@ -33,7 +33,7 @@ yellow(`  - Type React :
     3. Haha
     4. Wow
     5. Sad
-    6. Angry
+    6. Angry React
     7. Random\n`)
 
 const COOKIES = fs.readFileSync('cookies.txt', {
@@ -157,13 +157,13 @@ const startReact = (link) => new Promise(async (resolve, reject) => {
                         const go = await startReact(getReact.link[type])
                         go.status == true ? green(`[+] Success react id -> ${getPost.ids[i].id} [${type_text}]`) : red(`[+] Error react id -> ${getPost.ids[i].id} [${type_text}]`) 
                     } else {
-                        red('[!] Error get react link!');
+                        red('[!] Error bro');
                     }
                     green(`[!] Delay react ! ${second2}s`)
                     await delay(parseInt(second2, 10) * 1000); 
                 }
             } else {
-                red('[!] Error, post not found!');
+                red('[!] Error, tidak ditemukan!');
             }
             green(`[!] Delay Get Post ! ${second}s`)
             await delay(parseInt(second, 10) * 1000);   
